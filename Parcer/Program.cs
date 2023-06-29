@@ -7,13 +7,9 @@ using System.Text.RegularExpressions;
 
 Console.WriteLine("Hello, World!");
 
-var url = "https://www.swansonvitamins.com/ncat1/Vitamins+and+Supplements/ncat2/Multivitamins/ncat3/Multivitamins+with+Iron/q";
-
 var url1 = "https://www.swansonvitamins.com/ncat1/Vitamins+and+Supplements/ncat2/Multivitamins/ncat3/Multivitamins+with+Iron/q?page=";
-string prodList = "";
 var products = new List<Product>();
 int iter = 1;
-int iter2 = 1;
 
 Workbook book = new Workbook();
 Worksheet sheet = book.Worksheets[0];
