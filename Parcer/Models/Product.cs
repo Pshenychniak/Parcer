@@ -1,0 +1,25 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Parcer.Models
+{
+    [Index(nameof(Code), IsUnique = true)]
+    public class Product
+    {
+        public int Id { get; set; }        
+        public string Code { get; set; }
+        public string Title { get; set; }
+        public decimal Price { get; set; }
+        public bool Available { get; set; }
+        public string Description { get; set; }
+        public string Vendor { get; set; }
+        public string FullUrl { get; set; }
+        public string ImgUrl { get; set; }
+        public DateTime CreateAT { get; set; }
+        public DateTime UpdateAT { get; set; }
+    }
+}

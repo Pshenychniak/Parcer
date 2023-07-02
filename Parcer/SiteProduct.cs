@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Parcer
 {
-    public class Product
+    public class SiteProduct
     {
         [JsonPropertyName("productVendor")]
         public string Vendor { get; set; }
@@ -29,5 +29,23 @@ namespace Parcer
 
         [JsonPropertyName("longURL")]
         public string Url { get; set; }
+
+        public string FullUrl
+        {
+            get
+            {
+                return $"https://media.swansonvitamins.com{Url}";
+            }
+
+        }
+
+        public string ImagelUrl
+        {
+            get
+            {
+                return $"https://media.swansonvitamins.com/images/items/master/{Number}.jpg";
+            }
+
+        }
     }
 }
