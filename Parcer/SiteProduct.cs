@@ -34,7 +34,7 @@ namespace Parcer
         {
             get
             {
-                return $"https://media.swansonvitamins.com{Url}";
+                return $"https://swansonvitamins.com/{Url}";
             }
 
         }
