@@ -10,6 +10,7 @@ namespace Parcer.Models
     public  class ProductContext :DbContext
     {
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

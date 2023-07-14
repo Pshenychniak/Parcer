@@ -48,7 +48,7 @@ namespace SwansonBot.Models
                                chatId: update.Message.Chat.Id,
                                photo: InputFile.FromUri($"{product.ImgUrl}"),
                                caption:
-                               $"<b>{(product.Available ? "🟢" : "🔴")}{product.Title}</b>\n" +
+                               $"<b>{(product.Available ? "✅" : "❌")}{product.Title}</b>\n" +
                                $"<b>{product.Description}</b>\n" +
                                $"${product.Price.ToString("F")}\n",
                                parseMode: Telegram.Bot.Types.Enums.ParseMode.Html,
@@ -61,7 +61,7 @@ namespace SwansonBot.Models
             {
                 ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
                 {
-                        new KeyboardButton[] { "Download file" }
+                        new KeyboardButton[] { "Download file","Send on Email" }
                     })
                 {
                     ResizeKeyboard = true
@@ -73,6 +73,20 @@ namespace SwansonBot.Models
                     replyMarkup: replyKeyboardMarkup
                     );
             }
+        }
+        public async Task SendProductsOnEmail(ITelegramBotClient bot, Update update, CancellationToken cancellationToken)
+        {                  
+                
+            var file = Guid.NewGuid().ToString("D") + ".xlsx";
+
+            productWriter.SaveAs(file, await context.Products.ToListAsync());
+                    
+            SendMail.Send(update.Message.Text, file);
+
+            await Task.Run(() => System.IO.File.Delete(file), cancellationToken);
+
+            await bot.SendTextMessageAsync(update.Message.Chat, "Файл відправленно вам на пошту!");
+
         }
         public async Task HandleUpdate(ITelegramBotClient bot,Update update, CancellationToken cancellationToken)
         {
@@ -88,6 +102,13 @@ namespace SwansonBot.Models
                 if(text == "Download file" ) 
                 {
                     await SendProductsFileAsync(bot, update, cancellationToken);
+                }else if (text.Contains('@'))
+                {
+                    if (SendMail.IsValidEmail(text))
+                    {
+                        await SendProductsOnEmail(bot, update, cancellationToken);
+                    }
+                    
                 }
                 else
                 {
